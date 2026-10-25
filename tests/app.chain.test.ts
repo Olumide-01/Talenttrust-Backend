@@ -29,7 +29,7 @@ const fakeReader = (status: OnChainStatus = snapshot()): ChainReader & { refresh
 describe('GET /api/v1/chain', () => {
   it('keeps the static deployment info and adds onChain from the injected reader', async () => {
     const reader = fakeReader();
-    const app = createApp({ store: new EscrowStore(), chainReader: reader });
+    const app = createApp({ store: new EscrowStore(), chainStatusReader: reader });
 
     const res = await request(app).get('/api/v1/chain');
     expect(res.status).toBe(200);
@@ -42,7 +42,7 @@ describe('GET /api/v1/chain', () => {
 
   it('passes refresh=true through to the reader', async () => {
     const reader = fakeReader();
-    const app = createApp({ store: new EscrowStore(), chainReader: reader });
+    const app = createApp({ store: new EscrowStore(), chainStatusReader: reader });
 
     await request(app).get('/api/v1/chain?refresh=true');
     expect(reader.refreshes).toEqual([true]);
@@ -61,7 +61,7 @@ describe('GET /api/v1/chain', () => {
     const reader = fakeReader(
       snapshot({ reachable: false, stale: false, error: 'rpc request failed', latestLedger: undefined }),
     );
-    const app = createApp({ store: new EscrowStore(), chainReader: reader });
+    const app = createApp({ store: new EscrowStore(), chainStatusReader: reader });
 
     const res = await request(app).get('/api/v1/chain');
     expect(res.status).toBe(200);
@@ -71,7 +71,7 @@ describe('GET /api/v1/chain', () => {
 
   it('serves stale snapshots with stale=true when the reader reports them', async () => {
     const reader = fakeReader(snapshot({ stale: true, error: 'simulate version timed out after 4000ms' }));
-    const app = createApp({ store: new EscrowStore(), chainReader: reader });
+    const app = createApp({ store: new EscrowStore(), chainStatusReader: reader });
 
     const res = await request(app).get('/api/v1/chain');
     expect(res.status).toBe(200);

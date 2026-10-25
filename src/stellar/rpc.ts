@@ -15,7 +15,7 @@ import { config } from '../config';
 export const THROWAWAY_SOURCE_ACCOUNT = 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF';
 
 export const networkPassphraseFor = (network: string): string =>
-  network === 'public' ? Networks.PUBLIC : Networks.TESTNET;
+  network === 'public' || network === 'mainnet' ? Networks.PUBLIC : Networks.TESTNET;
 
 export class RpcError extends Error {}
 export class RpcTimeoutError extends RpcError {}

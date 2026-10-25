@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `?refresh=true` bypasses the cache, rate-limited to once per 5s
   (`CHAIN_REFRESH_MIN_INTERVAL_MS`). Per-call RPC timeout is
   `RPC_TIMEOUT_MS` (default 4000ms).
-- `createApp({ store, chainReader })` dependency injection so tests exercise
+- `createApp({ store, chainStatusReader })` dependency injection so tests exercise
   the endpoint without network I/O.
 
 #### Transaction Poller Lease Fencing (Issue #1210)
