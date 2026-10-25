@@ -103,7 +103,7 @@ describe('ContractReader.simulateRead decoding (recorded fixtures)', () => {
     const op = tx.operations[0];
     expect(op.type).toBe('invokeHostFunction');
     if (op.type !== 'invokeHostFunction') throw new Error('expected an invokeHostFunction operation');
-    expect(op.func.type).toBe('hostFunctionTypeInvokeContract');
+    expect(op.func.switch().name).toBe('hostFunctionTypeInvokeContract');
     // The envelope must be exactly `Contract.call("version")` from the throwaway account.
     const reference = new TransactionBuilder(new Account(THROWAWAY_SOURCE_ACCOUNT, '0'), {
       fee: BASE_FEE,
